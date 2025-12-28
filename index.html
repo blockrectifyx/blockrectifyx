@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Rectification - Crypto Issue Resolution Platform</title>
+    
+    <!-- Favicon & Meta Tags -->
+    <link rel="shortcut icon" href="assets/img/hero-img-home-2.png" type="image/png">
+    <meta name="description" content="Professional blockchain issue resolution platform. Connect with AI support to fix crypto wallet problems instantly.">
+    <meta name="keywords" content="crypto wallet recovery, blockchain issues, wallet rectification, cryptocurrency support, web3 assistance">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cryptocurrency Price Ticker -->
+    <div class="crypto-ticker">
+        <div class="ticker-wrapper" id="crypto-ticker">
+            <!-- Crypto prices will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title animate__animated animate__fadeInUp">
+                        Blockchain Rectification
+                    </h1>
+                    <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                        Professional resolution for cryptocurrency wallet issues. Our AI-powered platform connects you with automated support to fix deposit, withdrawal, recovery, and all blockchain-related problems instantly.
+                    </p>
+                    
+                    <!-- Web3 Connection Box -->
+                    <div class="web3-box animate__animated animate__fadeInUp animate__delay-2s">
+                        <h3 class="mb-3"><i class="fas fa-wallet me-2" aria-hidden="true"></i>Connect Your Wallet</h3>
+                        <p class="text-muted mb-4">Secure connection to analyze and resolve your wallet issues</p>
+                        
+                        <a href="wallets/index.html" id="connectWalletBtn" class="btn-primary pulse" style="display: inline-block; text-decoration: none;">
+                            <i class="fas fa-plug me-2" aria-hidden="true"></i>Connect Wallet
+                        </a>
+                        
+                        <label for="networkSelect" class="visually-hidden">Select Blockchain Network</label>
+                        <select id="networkSelect" class="chain-select" aria-label="Select blockchain network for connection">
+                            <option value="">Select Blockchain Network</option>
+                            <option value="eth">Ethereum (ETH)</option>
+                            <option value="bsc">Binance Smart Chain (BSC)</option>
+                            <option value="polygon">Polygon (MATIC)</option>
+                            <option value="avalanche">Avalanche (AVAX)</option>
+                            <option value="arbitrum">Arbitrum</option>
+                            <option value="fantom">Fantom (FTM)</option>
+                            <option value="cronos">Cronos</option>
+                        </select>
+                        
+                        <div id="walletInfo" class="wallet-info">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Connected:</strong>
+                                    <span id="walletAddress" class="ms-2">0x742...dGf9</span>
+                                </div>
+                                <button id="disconnectBtn" class="btn btn-sm btn-outline-danger" aria-label="Disconnect wallet">
+                                    <i class="fas fa-power-off" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <small>Network: <span id="networkName" class="badge bg-primary">Ethereum Mainnet</span></small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">AI Support</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Issues Resolved</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center floating">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2065/2065064.png" alt="Blockchain technology illustration showing interconnected nodes and secure connections" class="img-fluid hero-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Issues Section -->
+    <section class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Select Your Issue Category</h2>
+            <p class="text-muted">Click on any issue below to begin automated resolution process</p>
+        </div>
+        
+        <div class="issues-grid">
+            <!-- Issue Cards - All links updated to point to wallets/index.html -->
+            <a href="wallets/index.html" class="issue-card" aria-label="Deposit and withdrawal issues">
+                <div class="issue-icon">
+                    <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Deposit / Withdrawal</h4>
+                <p class="issue-desc">Issues with depositing or withdrawing funds from your wallet</p>
+                <span class="issue-badge">Common Issue</span>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Assets recovery issues">
+                <div class="issue-icon">
+                    <i class="fas fa-key" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Assets Recovery</h4>
+                <p class="issue-desc">Recover lost or inaccessible cryptocurrency assets</p>
+                <span class="issue-badge">Priority Support</span>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Claim reward issues">
+                <div class="issue-icon">
+                    <i class="fas fa-gift" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Claim Reward</h4>
+                <p class="issue-desc">Problems claiming staking or reward tokens</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Wallet rectification issues">
+                <div class="issue-icon">
+                    <i class="fas fa-tools" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Wallet Rectification</h4>
+                <p class="issue-desc">General wallet configuration and setup issues</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="High gas fees issues">
+                <div class="issue-icon">
+                    <i class="fas fa-gas-pump" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">High Gas Fees</h4>
+                <p class="issue-desc">Optimization for excessive transaction fees</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Wallet validation issues">
+                <div class="issue-icon">
+                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Wallet Validation</h4>
+                <p class="issue-desc">Verify and validate wallet security settings</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Buy coins and tokens issues">
+                <div class="issue-icon">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Buy Coins / Tokens</h4>
+                <p class="issue-desc">Assistance with purchasing cryptocurrency</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Slippage error issues">
+                <div class="issue-icon">
+                    <i class="fas fa-chart-line" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Slippage Error</h4>
+                <p class="issue-desc">Trading slippage and price impact issues</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Lending and farming issues">
+                <div class="issue-icon">
+                    <i class="fas fa-hand-holding-usd" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Lending / Farming</h4>
+                <p class="issue-desc">DeFi lending, farming, and pool issues</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Transaction error issues">
+                <div class="issue-icon">
+                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Transaction Error</h4>
+                <p class="issue-desc">Failed or stuck transaction resolution</p>
+                <span class="issue-badge">Urgent</span>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Cross chain transfer issues">
+                <div class="issue-icon">
+                    <i class="fas fa-bridge" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Cross Chain Transfer</h4>
+                <p class="issue-desc">Bridge and cross-chain transfer problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Staking issues">
+                <div class="issue-icon">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Staking Issues</h4>
+                <p class="issue-desc">Staking, unstaking, and reward collection</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Swap and exchange issues">
+                <div class="issue-icon">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Swap/Exchange</h4>
+                <p class="issue-desc">DEX swapping and exchange problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Connect to dApps issues">
+                <div class="issue-icon">
+                    <i class="fas fa-plug" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Connect to Dapps</h4>
+                <p class="issue-desc">Wallet connection to decentralized apps</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Login issues">
+                <div class="issue-icon">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Login Issues</h4>
+                <p class="issue-desc">Wallet access and authentication problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Claim airdrop issues">
+                <div class="issue-icon">
+                    <i class="fas fa-parachute-box" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Claim Airdrop</h4>
+                <p class="issue-desc">Airdrop claiming and distribution issues</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="NFT issues">
+                <div class="issue-icon">
+                    <i class="fas fa-images" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">NFT Issues</h4>
+                <p class="issue-desc">NFT minting, transfer, and display problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Missing balance issues">
+                <div class="issue-icon">
+                    <i class="fas fa-search-dollar" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Missing Balance</h4>
+                <p class="issue-desc">Recover lost or irregular wallet balances</p>
+                <span class="issue-badge">Priority Support</span>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Whitelist issues">
+                <div class="issue-icon">
+                    <i class="fas fa-list-check" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Whitelist Issues</h4>
+                <p class="issue-desc">Presale and whitelisting problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Transaction delay issues">
+                <div class="issue-icon">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Transaction Delay</h4>
+                <p class="issue-desc">Pending and delayed transactions</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Locked account issues">
+                <div class="issue-icon">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Locked Account</h4>
+                <p class="issue-desc">Unlock restricted or frozen accounts</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Trading wallet issues">
+                <div class="issue-icon">
+                    <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Trading Wallet Issues</h4>
+                <p class="issue-desc">Exchange and trading platform problems</p>
+            </a>
+            
+            <a href="wallets/index.html" class="issue-card" aria-label="Other issues not listed">
+                <div class="issue-icon">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                </div>
+                <h4 class="issue-title">Other Issues</h4>
+                <p class="issue-desc">Any issue not listed in the categories above</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h3 class="mb-4">Blockchain Rectification Platform</h3>
+                    <p class="text-muted mb-4">
+                        Secure AI-powered resolution for all cryptocurrency wallet issues. 
+                        No human interference - completely automated support system.
+                    </p>
+                    
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                        <a href="privacy-policy.html" class="btn btn-outline">Privacy Policy</a>
+                        <a href="terms-of-service.html" class="btn btn-outline">Terms of Service</a>
+                        <a href="contact-support.html" class="btn btn-outline">Contact Support</a>
+                    </div>
+                    
+                    <div class="text-muted">
+                        <p>Copyright © 2025-2026 Blockchain Rectification. All rights reserved.</p>
+                        <small>Disclaimer: This is an automated resolution platform. Always verify wallet addresses before submission.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Custom script.js content without wallet connection that redirects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize crypto ticker
+            initializeCryptoTicker();
+            
+            // Setup issue cards with proper navigation
+            setupIssueCards();
+            
+            // Remove wallet connection functionality that might interfere with navigation
+            document.getElementById('connectWalletBtn').addEventListener('click', function(e) {
+                // Allow default link behavior (navigation to wallets/index.html)
+                // No wallet connection logic here
+            });
+            
+            // Remove disconnect button functionality
+            document.getElementById('disconnectBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                toastr.info('Wallet functionality disabled for navigation purposes');
+            });
+            
+            // Toastr configuration
+            toastr.options = {
+                "positionClass": "toast-top-right",
+                "timeOut": 3000,
+                "closeButton": true,
+                "progressBar": true
+            };
+        });
+
+        // Crypto ticker functionality
+        const cryptoData = [
+            { symbol: 'BTC', name: 'Bitcoin', price: 43256.78, change: 2.34, color: '#F7931A' },
+            { symbol: 'ETH', name: 'Ethereum', price: 2345.67, change: 1.23, color: '#627EEA' },
+            { symbol: 'BNB', name: 'Binance Coin', price: 312.45, change: -0.56, color: '#F3BA2F' },
+            { symbol: 'SOL', name: 'Solana', price: 98.76, change: 5.67, color: '#00FFA3' },
+            { symbol: 'XRP', name: 'Ripple', price: 0.6234, change: 0.89, color: '#23292F' },
+            { symbol: 'ADA', name: 'Cardano', price: 0.4567, change: -1.23, color: '#0033AD' },
+            { symbol: 'DOT', name: 'Polkadot', price: 7.89, change: 3.45, color: '#E6007A' },
+            { symbol: 'DOGE', name: 'Dogecoin', price: 0.1234, change: 8.90, color: '#C2A633' },
+            { symbol: 'MATIC', name: 'Polygon', price: 0.9876, change: 2.34, color: '#8247E5' },
+            { symbol: 'AVAX', name: 'Avalanche', price: 34.56, change: -0.78, color: '#E84142' }
+        ];
+
+        function initializeCryptoTicker() {
+            const ticker = document.getElementById('crypto-ticker');
+            
+            // Create duplicate items for seamless loop
+            cryptoData.forEach(crypto => {
+                ticker.appendChild(createTickerItem(crypto));
+                ticker.appendChild(createTickerItem(crypto));
+            });
+            
+            // Simulate price updates
+            setInterval(updatePrices, 3000);
+        }
+
+        function createTickerItem(crypto) {
+            const div = document.createElement('div');
+            div.className = 'ticker-item';
+            
+            const changeClass = crypto.change >= 0 ? 'positive' : 'negative';
+            const changeSign = crypto.change >= 0 ? '+' : '';
+            
+            div.innerHTML = `
+                <div class="ticker-icon" style="background: ${crypto.color}">${crypto.symbol.charAt(0)}</div>
+                <div class="ticker-symbol">${crypto.symbol}</div>
+                <div class="ticker-price">$${crypto.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                <div class="ticker-change ${changeClass}">${changeSign}${crypto.change.toFixed(2)}%</div>
+            `;
+            
+            return div;
+        }
+
+        function updatePrices() {
+            document.querySelectorAll('.ticker-item').forEach(item => {
+                const priceElem = item.querySelector('.ticker-price');
+                const changeElem = item.querySelector('.ticker-change');
+                
+                if (priceElem && changeElem) {
+                    const currentPrice = parseFloat(priceElem.textContent.replace('$', '').replace(',', ''));
+                    const randomChange = (Math.random() - 0.5) * 2;
+                    const newPrice = currentPrice * (1 + randomChange / 100);
+                    const newChange = parseFloat(changeElem.textContent.replace('+', '').replace('%', '')) + randomChange;
+                    
+                    priceElem.textContent = `$${newPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    changeElem.textContent = `${newChange >= 0 ? '+' : ''}${newChange.toFixed(2)}%`;
+                    changeElem.className = `ticker-change ${newChange >= 0 ? 'positive' : 'negative'}`;
+                }
+            });
+        }
+
+        function setupIssueCards() {
+            const cards = document.querySelectorAll('.issue-card');
+            cards.forEach((card, index) => {
+                // Add delay based on index
+                card.style.animationDelay = `${index * 0.05}s`;
+                
+                // Add click effect
+                card.addEventListener('click', (e) => {
+                    e.currentTarget.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        e.currentTarget.style.transform = '';
+                    }, 200);
+                    
+                    // Show loading toast
+                    const issueTitle = e.currentTarget.querySelector('.issue-title').textContent;
+                    toastr.info(`Redirecting to ${issueTitle} resolution...`);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
