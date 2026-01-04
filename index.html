@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index,follow">
     <meta name="robots" content="noindex,follow">
     <meta name="robots" content="index,nofollow">
     <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noodp"/>
     <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noodp"/>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Blockchain Rectification - Crypto Issue Resolution Platform</title>
+    <title>Block Rectify X - Advanced Crypto Issue Resolution Platform</title>
     
     <!-- Favicon & Meta Tags -->
     <link rel="shortcut icon" href="assets/img/hero-img-home-2.png" type="image/png">
@@ -22,7 +21,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Libraries -->
@@ -30,10 +29,790 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(148, 163, 184, 0.1);
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --glow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+            animation: bgRotate 30s linear infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .floating-orbs {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: #d946ef;
+            bottom: 10%;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        /* Crypto Ticker */
+        .crypto-ticker {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 100;
+        }
+
+        .ticker-wrapper {
+            display: flex;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .ticker-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 30px;
+            border-right: 1px solid var(--border);
+        }
+
+        .ticker-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            color: white;
+        }
+
+        .ticker-symbol {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .ticker-price {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .ticker-change {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .ticker-change.positive {
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .ticker-change.negative {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            box-shadow: var(--glow);
+        }
+
+        .brand-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 100px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .hero-badge i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-title .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 540px;
+        }
+
+        /* Connect Wallet Card */
+        .wallet-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: var(--glow);
+        }
+
+        .wallet-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-card-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--gradient-2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .wallet-card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .wallet-card-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .connect-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 18px 30px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .connect-btn:hover::before {
+            left: 100%;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+            color: white;
+        }
+
+        .network-select {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .network-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .network-select option {
+            background: var(--dark);
+            color: var(--text);
+        }
+
+        .wallet-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            gap: 30px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Hero Image */
+        .hero-image-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image {
+            max-width: 450px;
+            animation: floatImage 6s ease-in-out infinite;
+            filter: drop-shadow(0 30px 60px rgba(99, 102, 241, 0.3));
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 2px dashed rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            animation: rotateRing 20s linear infinite;
+        }
+
+        .orbit-ring-1 {
+            width: 350px;
+            height: 350px;
+        }
+
+        .orbit-ring-2 {
+            width: 450px;
+            height: 450px;
+            animation-direction: reverse;
+            animation-duration: 30s;
+        }
+
+        @keyframes rotateRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Issues Section */
+        .issues-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Issues Grid */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .issue-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+
+        .issue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+            color: white;
+        }
+
+        .issue-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .issue-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .issue-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .issue-card:hover .issue-icon-wrapper {
+            background: var(--gradient-1);
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .issue-icon-wrapper i {
+            font-size: 26px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+
+        .issue-card:hover .issue-icon-wrapper i {
+            color: white;
+        }
+
+        .issue-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .issue-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .issue-card:hover .issue-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .issue-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .issue-arrow {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .issue-card:hover .issue-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .footer-brand-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 400px;
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+            padding-top: 25px;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer-disclaimer {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-image {
+                max-width: 350px;
+                margin-top: 50px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .stats-row {
+                justify-content: center;
+            }
+            
+            .orbit-ring {
+                display: none;
+            }
+            
+            .issues-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
     <!-- Cryptocurrency Price Ticker -->
     <div class="crypto-ticker">
         <div class="ticker-wrapper" id="crypto-ticker">
@@ -41,30 +820,57 @@
         </div>
     </div>
 
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <span class="brand-text">Block Rectify X</span>
+            </a>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-bg"></div>
+    <section class="hero">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
+                    <div class="hero-badge animate__animated animate__fadeInDown">
+                        <i class="fas fa-shield-check"></i>
+                        <span>Trusted by 50,000+ Users Worldwide</span>
+                    </div>
+                    
                     <h1 class="hero-title animate__animated animate__fadeInUp">
-                        Blockchain Rectification
+                        <span class="gradient">Block Rectify X</span><br>
+                        Advanced Resolution
                     </h1>
+                    
                     <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
                         Professional resolution for cryptocurrency wallet issues. Our AI-powered platform connects you with automated support to fix deposit, withdrawal, recovery, and all blockchain-related problems instantly.
                     </p>
                     
-                    <!-- Web3 Connection Box -->
-                    <div class="web3-box animate__animated animate__fadeInUp animate__delay-2s">
-                        <h3 class="mb-3"><i class="fas fa-wallet me-2" aria-hidden="true"></i>Connect Your Wallet</h3>
-                        <p class="text-muted mb-4">Secure connection to analyze and resolve your wallet issues</p>
+                    <!-- Wallet Connection Card -->
+                    <div class="wallet-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="wallet-card-header">
+                            <div class="wallet-card-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div>
+                                <div class="wallet-card-title">Connect Your Wallet</div>
+                                <div class="wallet-card-desc">Secure connection to analyze and resolve your issues</div>
+                            </div>
+                        </div>
                         
-                        <a href="wallets/index.html" id="connectWalletBtn" class="btn-primary pulse" style="display: inline-block; text-decoration: none;">
-                            <i class="fas fa-plug me-2" aria-hidden="true"></i>Connect Wallet
+                        <a href="wallets/index.html" id="connectWalletBtn" class="connect-btn">
+                            <i class="fas fa-plug"></i>
+                            <span>Connect Wallet</span>
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                         
                         <label for="networkSelect" class="visually-hidden">Select Blockchain Network</label>
-                        <select id="networkSelect" class="chain-select" aria-label="Select blockchain network for connection">
+                        <select id="networkSelect" class="network-select" aria-label="Select blockchain network">
                             <option value="">Select Blockchain Network</option>
                             <option value="eth">Ethereum (ETH)</option>
                             <option value="bsc">Binance Smart Chain (BSC)</option>
@@ -82,7 +888,7 @@
                                     <span id="walletAddress" class="ms-2">0x742...dGf9</span>
                                 </div>
                                 <button id="disconnectBtn" class="btn btn-sm btn-outline-danger" aria-label="Disconnect wallet">
-                                    <i class="fas fa-power-off" aria-hidden="true"></i>
+                                    <i class="fas fa-power-off"></i>
                                 </button>
                             </div>
                             <div class="mt-2">
@@ -91,24 +897,28 @@
                         </div>
                     </div>
                     
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">24/7</div>
+                    <!-- Stats -->
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-value">24/7</div>
                             <div class="stat-label">AI Support</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">5000+</div>
+                        <div class="stat-box">
+                            <div class="stat-value">5000+</div>
                             <div class="stat-label">Issues Resolved</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">99%</div>
+                        <div class="stat-box">
+                            <div class="stat-value">99%</div>
                             <div class="stat-label">Success Rate</div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-6">
-                    <div class="text-center floating">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2065/2065064.png" alt="Blockchain technology illustration showing interconnected nodes and secure connections" class="img-fluid hero-image">
+                    <div class="hero-image-container">
+                        <div class="orbit-ring orbit-ring-1"></div>
+                        <div class="orbit-ring orbit-ring-2"></div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2065/2065064.png" alt="Blockchain technology illustration" class="hero-image">
                     </div>
                 </div>
             </div>
@@ -116,224 +926,267 @@
     </section>
 
     <!-- Issues Section -->
-    <section class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold mb-3">Select Your Issue Category</h2>
-            <p class="text-muted">Click on any issue below to begin automated resolution process</p>
-        </div>
-        
-        <div class="issues-grid">
-            <!-- Issue Cards - All links updated to point to wallets/index.html -->
-            <a href="wallets/index.html" class="issue-card" aria-label="Deposit and withdrawal issues">
-                <div class="issue-icon">
-                    <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+    <section class="issues-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>Quick Resolution</span>
                 </div>
-                <h4 class="issue-title">Deposit / Withdrawal</h4>
-                <p class="issue-desc">Issues with depositing or withdrawing funds from your wallet</p>
-                <span class="issue-badge">Common Issue</span>
-            </a>
+                <h2 class="section-title">Select Your Issue Category</h2>
+                <p class="section-subtitle">Click on any issue below to begin the automated resolution process with our AI-powered system</p>
+            </div>
             
-            <a href="wallets/index.html" class="issue-card" aria-label="Assets recovery issues">
-                <div class="issue-icon">
-                    <i class="fas fa-key" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Assets Recovery</h4>
-                <p class="issue-desc">Recover lost or inaccessible cryptocurrency assets</p>
-                <span class="issue-badge">Priority Support</span>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Claim reward issues">
-                <div class="issue-icon">
-                    <i class="fas fa-gift" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Claim Reward</h4>
-                <p class="issue-desc">Problems claiming staking or reward tokens</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Wallet rectification issues">
-                <div class="issue-icon">
-                    <i class="fas fa-tools" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Wallet Rectification</h4>
-                <p class="issue-desc">General wallet configuration and setup issues</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="High gas fees issues">
-                <div class="issue-icon">
-                    <i class="fas fa-gas-pump" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">High Gas Fees</h4>
-                <p class="issue-desc">Optimization for excessive transaction fees</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Wallet validation issues">
-                <div class="issue-icon">
-                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Wallet Validation</h4>
-                <p class="issue-desc">Verify and validate wallet security settings</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Buy coins and tokens issues">
-                <div class="issue-icon">
-                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Buy Coins / Tokens</h4>
-                <p class="issue-desc">Assistance with purchasing cryptocurrency</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Slippage error issues">
-                <div class="issue-icon">
-                    <i class="fas fa-chart-line" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Slippage Error</h4>
-                <p class="issue-desc">Trading slippage and price impact issues</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Lending and farming issues">
-                <div class="issue-icon">
-                    <i class="fas fa-hand-holding-usd" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Lending / Farming</h4>
-                <p class="issue-desc">DeFi lending, farming, and pool issues</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Transaction error issues">
-                <div class="issue-icon">
-                    <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Transaction Error</h4>
-                <p class="issue-desc">Failed or stuck transaction resolution</p>
-                <span class="issue-badge">Urgent</span>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Cross chain transfer issues">
-                <div class="issue-icon">
-                    <i class="fas fa-bridge" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Cross Chain Transfer</h4>
-                <p class="issue-desc">Bridge and cross-chain transfer problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Staking issues">
-                <div class="issue-icon">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Staking Issues</h4>
-                <p class="issue-desc">Staking, unstaking, and reward collection</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Swap and exchange issues">
-                <div class="issue-icon">
-                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Swap/Exchange</h4>
-                <p class="issue-desc">DEX swapping and exchange problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Connect to dApps issues">
-                <div class="issue-icon">
-                    <i class="fas fa-plug" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Connect to Dapps</h4>
-                <p class="issue-desc">Wallet connection to decentralized apps</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Login issues">
-                <div class="issue-icon">
-                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Login Issues</h4>
-                <p class="issue-desc">Wallet access and authentication problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Claim airdrop issues">
-                <div class="issue-icon">
-                    <i class="fas fa-parachute-box" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Claim Airdrop</h4>
-                <p class="issue-desc">Airdrop claiming and distribution issues</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="NFT issues">
-                <div class="issue-icon">
-                    <i class="fas fa-images" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">NFT Issues</h4>
-                <p class="issue-desc">NFT minting, transfer, and display problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Missing balance issues">
-                <div class="issue-icon">
-                    <i class="fas fa-search-dollar" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Missing Balance</h4>
-                <p class="issue-desc">Recover lost or irregular wallet balances</p>
-                <span class="issue-badge">Priority Support</span>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Whitelist issues">
-                <div class="issue-icon">
-                    <i class="fas fa-list-check" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Whitelist Issues</h4>
-                <p class="issue-desc">Presale and whitelisting problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Transaction delay issues">
-                <div class="issue-icon">
-                    <i class="fas fa-clock" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Transaction Delay</h4>
-                <p class="issue-desc">Pending and delayed transactions</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Locked account issues">
-                <div class="issue-icon">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Locked Account</h4>
-                <p class="issue-desc">Unlock restricted or frozen accounts</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Trading wallet issues">
-                <div class="issue-icon">
-                    <i class="fas fa-chart-bar" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Trading Wallet Issues</h4>
-                <p class="issue-desc">Exchange and trading platform problems</p>
-            </a>
-            
-            <a href="wallets/index.html" class="issue-card" aria-label="Other issues not listed">
-                <div class="issue-icon">
-                    <i class="fas fa-question-circle" aria-hidden="true"></i>
-                </div>
-                <h4 class="issue-title">Other Issues</h4>
-                <p class="issue-desc">Any issue not listed in the categories above</p>
-            </a>
+            <div class="issues-grid">
+                <a href="wallets/index.html" class="issue-card" aria-label="Deposit and withdrawal issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4 class="issue-title">Deposit / Withdrawal</h4>
+                    <p class="issue-desc">Issues with depositing or withdrawing funds from your wallet</p>
+                    <span class="issue-badge">Common Issue</span>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Assets recovery issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h4 class="issue-title">Assets Recovery</h4>
+                    <p class="issue-desc">Recover lost or inaccessible cryptocurrency assets</p>
+                    <span class="issue-badge">Priority Support</span>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Claim reward issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h4 class="issue-title">Claim Reward</h4>
+                    <p class="issue-desc">Problems claiming staking or reward tokens</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Wallet rectification issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h4 class="issue-title">Wallet Rectification</h4>
+                    <p class="issue-desc">General wallet configuration and setup issues</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="High gas fees issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-gas-pump"></i>
+                    </div>
+                    <h4 class="issue-title">High Gas Fees</h4>
+                    <p class="issue-desc">Optimization for excessive transaction fees</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Wallet validation issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4 class="issue-title">Wallet Validation</h4>
+                    <p class="issue-desc">Verify and validate wallet security settings</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Buy coins and tokens issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4 class="issue-title">Buy Coins / Tokens</h4>
+                    <p class="issue-desc">Assistance with purchasing cryptocurrency</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Slippage error issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="issue-title">Slippage Error</h4>
+                    <p class="issue-desc">Trading slippage and price impact issues</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Lending and farming issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h4 class="issue-title">Lending / Farming</h4>
+                    <p class="issue-desc">DeFi lending, farming, and pool issues</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Transaction error issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4 class="issue-title">Transaction Error</h4>
+                    <p class="issue-desc">Failed or stuck transaction resolution</p>
+                    <span class="issue-badge">Urgent</span>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Cross chain transfer issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-bridge"></i>
+                    </div>
+                    <h4 class="issue-title">Cross Chain Transfer</h4>
+                    <p class="issue-desc">Bridge and cross-chain transfer problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Staking issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4 class="issue-title">Staking Issues</h4>
+                    <p class="issue-desc">Staking, unstaking, and reward collection</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Swap and exchange issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h4 class="issue-title">Swap/Exchange</h4>
+                    <p class="issue-desc">DEX swapping and exchange problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Connect to dApps issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h4 class="issue-title">Connect to Dapps</h4>
+                    <p class="issue-desc">Wallet connection to decentralized apps</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Login issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h4 class="issue-title">Login Issues</h4>
+                    <p class="issue-desc">Wallet access and authentication problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Claim airdrop issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-parachute-box"></i>
+                    </div>
+                    <h4 class="issue-title">Claim Airdrop</h4>
+                    <p class="issue-desc">Airdrop claiming and distribution issues</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="NFT issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h4 class="issue-title">NFT Issues</h4>
+                    <p class="issue-desc">NFT minting, transfer, and display problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Missing balance issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h4 class="issue-title">Missing Balance</h4>
+                    <p class="issue-desc">Recover lost or irregular wallet balances</p>
+                    <span class="issue-badge">Priority Support</span>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Whitelist issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <h4 class="issue-title">Whitelist Issues</h4>
+                    <p class="issue-desc">Presale and whitelisting problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Transaction delay issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="issue-title">Transaction Delay</h4>
+                    <p class="issue-desc">Pending and delayed transactions</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Locked account issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <h4 class="issue-title">Locked Account</h4>
+                    <p class="issue-desc">Unlock restricted or frozen accounts</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Trading wallet issues">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4 class="issue-title">Trading Wallet Issues</h4>
+                    <p class="issue-desc">Exchange and trading platform problems</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                
+                <a href="wallets/index.html" class="issue-card" aria-label="Other issues not listed">
+                    <div class="issue-icon-wrapper">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h4 class="issue-title">Other Issues</h4>
+                    <p class="issue-desc">Any issue not listed in the categories above</p>
+                    <div class="issue-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h3 class="mb-4">Blockchain Rectification Platform</h3>
-                    <p class="text-muted mb-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <div class="footer-brand justify-content-center">
+                        <div class="footer-brand-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <span class="footer-brand-text">Block Rectify X</span>
+                    </div>
+                    
+                    <p class="footer-desc mx-auto">
                         Secure AI-powered resolution for all cryptocurrency wallet issues. 
                         No human interference - completely automated support system.
                     </p>
                     
-                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                        <a href="privacy-policy.html" class="btn btn-outline">Privacy Policy</a>
-                        <a href="terms-of-service.html" class="btn btn-outline">Terms of Service</a>
-                        <a href="contact-support.html" class="btn btn-outline">Contact Support</a>
+                    <div class="footer-social justify-content-center">
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
                     
-                    <div class="text-muted">
-                        <p>Copyright © 2025-2026 Blockchain Rectification. All rights reserved.</p>
-                        <small>Disclaimer: This is an automated resolution platform. Always verify wallet addresses before submission.</small>
+                    <div class="footer-bottom">
+                        <p class="footer-copyright">Copyright © 2025-2026 Block Rectify X. All rights reserved.</p>
+                        <p class="footer-disclaimer">Disclaimer: This is an automated resolution platform. Always verify wallet addresses before submission.</p>
                     </div>
                 </div>
             </div>
@@ -347,7 +1200,6 @@
     
     <!-- Custom JavaScript -->
     <script>
-        // Custom script.js content without wallet connection that redirects
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize crypto ticker
             initializeCryptoTicker();
@@ -358,7 +1210,6 @@
             // Remove wallet connection functionality that might interfere with navigation
             document.getElementById('connectWalletBtn').addEventListener('click', function(e) {
                 // Allow default link behavior (navigation to wallets/index.html)
-                // No wallet connection logic here
             });
             
             // Remove disconnect button functionality
@@ -441,8 +1292,15 @@
         function setupIssueCards() {
             const cards = document.querySelectorAll('.issue-card');
             cards.forEach((card, index) => {
-                // Add delay based on index
-                card.style.animationDelay = `${index * 0.05}s`;
+                // Add staggered animation on load
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
                 
                 // Add click effect
                 card.addEventListener('click', (e) => {
