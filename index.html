@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- External Stylesheet -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@300;700&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
     
     <style>
         /* ========================================
@@ -1704,6 +1707,157 @@
             color: var(--primary);
             letter-spacing: 3px;
         }
+
+        /* ========================================
+           LANGUAGE SELECTOR STYLES
+        ======================================== */
+        .language-selector-wrapper {
+            position: relative;
+        }
+        
+        .language-selector {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 10px 35px 10px 15px;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2300d4ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            min-width: 140px;
+        }
+        
+        .language-selector:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+        
+        .language-selector:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+        }
+        
+        .language-selector option {
+            background: var(--dark-300);
+            color: var(--text-primary);
+            padding: 10px;
+        }
+        
+        /* Mobile Language Selector */
+        .mobile-language-selector {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            z-index: 9998;
+        }
+        
+        .mobile-lang-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--glow-secondary);
+            transition: var(--transition-smooth);
+            font-size: 20px;
+        }
+        
+        .mobile-lang-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .mobile-lang-dropdown {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            background: var(--dark-200);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 150px;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .mobile-lang-dropdown.active {
+            display: flex;
+        }
+        
+        .mobile-lang-option {
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: left;
+        }
+        
+        .mobile-lang-option:hover,
+        .mobile-lang-option.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        /* Translation Loading Indicator */
+        .translate-loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--dark-200);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px 40px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 99999;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .translate-loading.active {
+            display: flex;
+        }
+        
+        .translate-loading i {
+            font-size: 24px;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+        
+        .translate-loading span {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        @media (max-width: 992px) {
+            .language-selector-wrapper {
+                display: none;
+            }
+            
+            .mobile-language-selector {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1743,9 +1897,25 @@
 
                 <ul class="nav-links">
                     <li><a href="#" class="nav-link-item">Home</a></li>
+                    <li id="google_translate_element"></li>
                     <li><a href="#issues" class="nav-link-item">Solutions</a></li>
                     <li><a href="#features" class="nav-link-item">Features</a></li>
                     <li><a href="contact-support.html" class="nav-link-item">Support</a></li>
+                    <!-- Language Selector Added -->
+                    <li class="language-selector-wrapper">
+                        <select id="languageSelect" class="language-selector" aria-label="Select Language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="zh">🇨🇳 中文</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ru">🇷🇺 Русский</option>
+                            <option value="ja">🇯🇵 日本語</option>
+                            <option value="ko">🇰🇷 한국어</option>
+                        </select>
+                    </li>
                 </ul>
 
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
@@ -2667,6 +2837,1077 @@
         console.log('%c⚡ RectifyX Protocol', 'font-size: 24px; font-weight: bold; color: #00d4ff;');
         console.log('%cAdvanced Blockchain Resolution Platform', 'font-size: 14px; color: #7c3aed;');
         console.log('%c© 2025 RectifyX. All rights reserved.', 'font-size: 12px; color: #71717a;');
+
+
+        // ========================================
+// LANGUAGE TRANSLATION SYSTEM
+// ========================================
+
+// Translation Database - Add all your text here
+const translations = {
+    // Hero Section
+    "trusted-users": {
+        "en": "Trusted by 50,000+ Users Worldwide",
+        "es": "Confiado por más de 50,000 usuarios en todo el mundo",
+        "fr": "Fait confiance par plus de 50 000 utilisateurs dans le monde",
+        "de": "Über 50.000 Benutzer weltweit vertrauen uns",
+        "zh": "全球超过50,000名用户信赖",
+        "ar": "موثوق به من قبل أكثر من 50,000 مستخدم حول العالم",
+        "pt": "Confiável por mais de 50.000 usuários em todo o mundo",
+        "ru": "Доверяют более 50 000 пользователей по всему миру",
+        "ja": "世界中で50,000人以上のユーザーに信頼されています",
+        "ko": "전 세계 50,000명 이상의 사용자가 신뢰합니다"
+    },
+    "welcome-to": {
+        "en": "WELCOME TO",
+        "es": "BIENVENIDO A",
+        "fr": "BIENVENUE À",
+        "de": "WILLKOMMEN BEI",
+        "zh": "欢迎来到",
+        "ar": "مرحبا بك في",
+        "pt": "BEM-VINDO AO",
+        "ru": "ДОБРО ПОЖАЛОВАТЬ В",
+        "ja": "ようこそ",
+        "ko": "환영합니다"
+    },
+    "advanced-resolution": {
+        "en": "Advanced Blockchain Resolution",
+        "es": "Resolución Avanzada de Blockchain",
+        "fr": "Résolution Avancée de la Blockchain",
+        "de": "Erweiterte Blockchain-Lösung",
+        "zh": "高级区块链解决方案",
+        "ar": "حلول بلوكتشين متقدمة",
+        "pt": "Resolução Avançada de Blockchain",
+        "ru": "Расширенное разрешение блокчейна",
+        "ja": "高度なブロックチェーン解決",
+        "ko": "고급 블록체인 해결"
+    },
+    "hero-desc": {
+        "en": "Professional resolution for cryptocurrency wallet issues. Our AI-powered platform connects you with automated support to fix deposit, withdrawal, recovery, and all blockchain-related problems instantly.",
+        "es": "Resolución profesional para problemas de billetera de criptomonedas. Nuestra plataforma impulsada por IA te conecta con soporte automatizado para solucionar depósitos, retiros, recuperación y todos los problemas relacionados con blockchain al instante.",
+        "fr": "Résolution professionnelle des problèmes de portefeuille de crypto-monnaies. Notre plateforme alimentée par l'IA vous connecte à un support automatisé pour résoudre instantanément les dépôts, retraits, récupérations et tous les problèmes liés à la blockchain.",
+        "de": "Professionelle Lösung für Kryptowährungs-Wallet-Probleme. Unsere KI-gestützte Plattform verbindet Sie mit automatisiertem Support zur sofortigen Behebung von Einzahlungs-, Auszahlungs-, Wiederherstellungs- und allen Blockchain-bezogenen Problemen.",
+        "zh": "加密货币钱包问题的专业解决方案。我们的AI驱动平台将您与自动化支持连接，即时解决存款、提款、恢复和所有区块链相关问题。",
+        "ar": "حل احترافي لمشاكل محفظة العملات المشفرة. تربطك منصتنا المدعومة بالذكاء الاصطناعي بالدعم الآلي لإصلاح الإيداع والسحب والاسترداد وجميع المشاكل المتعلقة بالبلوكتشين على الفور.",
+        "pt": "Resolução profissional para problemas de carteira de criptomoedas. Nossa plataforma alimentada por IA conecta você ao suporte automatizado para corrigir depósitos, saques, recuperação e todos os problemas relacionados ao blockchain instantaneamente.",
+        "ru": "Профессиональное решение проблем с криптовалютными кошельками. Наша платформа на базе ИИ связывает вас с автоматической поддержкой для мгновенного решения проблем с депозитами, выводами, восстановлением и всех проблем, связанных с блокчейном.",
+        "ja": "暗号通貨ウォレットの問題に対するプロフェッショナルな解決策。当社のAI搭載プラットフォームは、入金、出金、回復、およびすべてのブロックチェーン関連の問題を即座に解決する自動サポートに接続します。",
+        "ko": "암호화폐 지갑 문제에 대한 전문적인 해결책. AI 기반 플랫폼이 자동화된 지원과 연결하여 입금, 출금, 복구 및 모든 블록체인 관련 문제를 즉시 해결합니다."
+    },
+    "connect-wallet-title": {
+        "en": "Connect Your Wallet",
+        "es": "Conecta tu Billetera",
+        "fr": "Connectez votre Portefeuille",
+        "de": "Verbinden Sie Ihre Wallet",
+        "zh": "连接您的钱包",
+        "ar": "قم بتوصيل محفظتك",
+        "pt": "Conecte sua Carteira",
+        "ru": "Подключите ваш кошелек",
+        "ja": "ウォレットを接続",
+        "ko": "지갑 연결"
+    },
+    "secure-connection": {
+        "en": "Secure connection to analyze and resolve your issues",
+        "es": "Conexión segura para analizar y resolver tus problemas",
+        "fr": "Connexion sécurisée pour analyser et résoudre vos problèmes",
+        "de": "Sichere Verbindung zur Analyse und Lösung Ihrer Probleme",
+        "zh": "安全连接以分析和解决您的问题",
+        "ar": "اتصال آمن لتحليل وحل مشاكلك",
+        "pt": "Conexão segura para analisar e resolver seus problemas",
+        "ru": "Безопасное соединение для анализа и решения ваших проблем",
+        "ja": "問題を分析して解決するための安全な接続",
+        "ko": "문제를 분석하고 해결하기 위한 안전한 연결"
+    },
+    "connect-wallet-btn": {
+        "en": "CONNECT WALLET",
+        "es": "CONECTAR BILLETERA",
+        "fr": "CONNECTER LE PORTEFEUILLE",
+        "de": "WALLET VERBINDEN",
+        "zh": "连接钱包",
+        "ar": "توصيل المحفظة",
+        "pt": "CONECTAR CARTEIRA",
+        "ru": "ПОДКЛЮЧИТЬ КОШЕЛЕК",
+        "ja": "ウォレットを接続",
+        "ko": "지갑 연결"
+    },
+    "ai-support": {
+        "en": "AI Support",
+        "es": "Soporte IA",
+        "fr": "Support IA",
+        "de": "KI-Support",
+        "zh": "AI支持",
+        "ar": "دعم الذكاء الاصطناعي",
+        "pt": "Suporte IA",
+        "ru": "ИИ Поддержка",
+        "ja": "AIサポート",
+        "ko": "AI 지원"
+    },
+    "issues-resolved": {
+        "en": "Issues Resolved",
+        "es": "Problemas Resueltos",
+        "fr": "Problèmes Résolus",
+        "de": "Gelöste Probleme",
+        "zh": "已解决的问题",
+        "ar": "المشاكل المحلولة",
+        "pt": "Problemas Resolvidos",
+        "ru": "Решенные проблемы",
+        "ja": "解決した問題",
+        "ko": "해결된 문제"
+    },
+    "success-rate": {
+        "en": "Success Rate",
+        "es": "Tasa de Éxito",
+        "fr": "Taux de Réussite",
+        "de": "Erfolgsquote",
+        "zh": "成功率",
+        "ar": "معدل النجاح",
+        "pt": "Taxa de Sucesso",
+        "ru": "Показатель успеха",
+        "ja": "成功率",
+        "ko": "성공률"
+    },
+    
+    // Issues Section
+    "quick-resolution": {
+        "en": "Quick Resolution Center",
+        "es": "Centro de Resolución Rápida",
+        "fr": "Centre de Résolution Rapide",
+        "de": "Schnelles Lösungszentrum",
+        "zh": "快速解决中心",
+        "ar": "مركز الحل السريع",
+        "pt": "Centro de Resolução Rápida",
+        "ru": "Центр быстрого решения",
+        "ja": "クイック解決センター",
+        "ko": "빠른 해결 센터"
+    },
+    "issue-category": {
+        "en": "Select Your Issue Category",
+        "es": "Selecciona tu Categoría de Problema",
+        "fr": "Sélectionnez Votre Catégorie de Problème",
+        "de": "Wählen Sie Ihre Problemkategorie",
+        "zh": "选择您的问题类别",
+        "ar": "حدد فئة مشكلتك",
+        "pt": "Selecione a Categoria do Problema",
+        "ru": "Выберите категорию проблемы",
+        "ja": "問題カテゴリを選択",
+        "ko": "문제 카테고리 선택"
+    },
+    "issue-subtitle": {
+        "en": "Click on any issue below to begin the automated resolution process with our advanced AI-powered system",
+        "es": "Haz clic en cualquier problema a continuación para comenzar el proceso de resolución automatizada con nuestro sistema avanzado impulsado por IA",
+        "fr": "Cliquez sur n'importe quel problème ci-dessous pour commencer le processus de résolution automatisé avec notre système avancé alimenté par l'IA",
+        "de": "Klicken Sie auf ein Problem unten, um den automatisierten Lösungsprozess mit unserem fortschrittlichen KI-System zu starten",
+        "zh": "点击下方任何问题，开始使用我们先进的AI系统进行自动解决",
+        "ar": "انقر على أي مشكلة أدناه لبدء عملية الحل الآلي مع نظامنا المتقدم المدعوم بالذكاء الاصطناعي",
+        "pt": "Clique em qualquer problema abaixo para iniciar o processo de resolução automatizada com nosso sistema avançado alimentado por IA",
+        "ru": "Нажмите на любую проблему ниже, чтобы начать автоматизированный процесс решения с помощью нашей продвинутой системы на базе ИИ",
+        "ja": "以下の問題をクリックして、高度なAIシステムによる自動解決プロセスを開始してください",
+        "ko": "아래 문제를 클릭하여 고급 AI 시스템으로 자동화된 해결 프로세스를 시작하세요"
+    },
+    
+    // Issue Cards
+    "deposit-withdrawal": {
+        "en": "Deposit / Withdrawal",
+        "es": "Depósito / Retiro",
+        "fr": "Dépôt / Retrait",
+        "de": "Einzahlung / Auszahlung",
+        "zh": "存款/提款",
+        "ar": "إيداع / سحب",
+        "pt": "Depósito / Saque",
+        "ru": "Депозит / Вывод",
+        "ja": "入金/出金",
+        "ko": "입금/출금"
+    },
+    "deposit-desc": {
+        "en": "Issues with depositing or withdrawing funds from your wallet",
+        "es": "Problemas al depositar o retirar fondos de tu billetera",
+        "fr": "Problèmes de dépôt ou de retrait de fonds de votre portefeuille",
+        "de": "Probleme bei der Ein- oder Auszahlung von Geldern aus Ihrer Wallet",
+        "zh": "从钱包存款或提款的问题",
+        "ar": "مشاكل في إيداع أو سحب الأموال من محفظتك",
+        "pt": "Problemas ao depositar ou sacar fundos da sua carteira",
+        "ru": "Проблемы с внесением или выводом средств из вашего кошелька",
+        "ja": "ウォレットからの入金または出金の問題",
+        "ko": "지갑에서 자금을 입금하거나 출금하는 문제"
+    },
+    "common-issue": {
+        "en": "Common Issue",
+        "es": "Problema Común",
+        "fr": "Problème Courant",
+        "de": "Häufiges Problem",
+        "zh": "常见问题",
+        "ar": "مشكلة شائعة",
+        "pt": "Problema Comum",
+        "ru": "Общая проблема",
+        "ja": "一般的な問題",
+        "ko": "일반적인 문제"
+    },
+    "assets-recovery": {
+        "en": "Assets Recovery",
+        "es": "Recuperación de Activos",
+        "fr": "Récupération d'Actifs",
+        "de": "Vermögenswiederherstellung",
+        "zh": "资产恢复",
+        "ar": "استرداد الأصول",
+        "pt": "Recuperação de Ativos",
+        "ru": "Восстановление активов",
+        "ja": "資産回復",
+        "ko": "자산 복구"
+    },
+    "assets-desc": {
+        "en": "Recover lost or inaccessible cryptocurrency assets",
+        "es": "Recupera activos de criptomonedas perdidos o inaccesibles",
+        "fr": "Récupérez les actifs de crypto-monnaie perdus ou inaccessibles",
+        "de": "Stellen Sie verlorene oder unzugängliche Kryptowährungsvermögen wieder her",
+        "zh": "恢复丢失或无法访问的加密货币资产",
+        "ar": "استرداد أصول العملات المشفرة المفقودة أو التي لا يمكن الوصول إليها",
+        "pt": "Recupere ativos de criptomoedas perdidos ou inacessíveis",
+        "ru": "Восстановите утерянные или недоступные криптовалютные активы",
+        "ja": "紛失した、またはアクセスできない暗号通貨資産を回復",
+        "ko": "분실되거나 접근할 수 없는 암호화폐 자산 복구"
+    },
+    "priority-support": {
+        "en": "Priority Support",
+        "es": "Soporte Prioritario",
+        "fr": "Support Prioritaire",
+        "de": "Prioritäts-Support",
+        "zh": "优先支持",
+        "ar": "دعم ذو أولوية",
+        "pt": "Suporte Prioritário",
+        "ru": "Приоритетная поддержка",
+        "ja": "優先サポート",
+        "ko": "우선 지원"
+    },
+    "claim-reward": {
+        "en": "Claim Reward",
+        "es": "Reclamar Recompensa",
+        "fr": "Réclamer la Récompense",
+        "de": "Belohnung beanspruchen",
+        "zh": "领取奖励",
+        "ar": "المطالبة بالمكافأة",
+        "pt": "Reivindicar Recompensa",
+        "ru": "Получить награду",
+        "ja": "報酬を請求",
+        "ko": "보상 청구"
+    },
+    "claim-desc": {
+        "en": "Problems claiming staking or reward tokens",
+        "es": "Problemas al reclamar tokens de staking o recompensas",
+        "fr": "Problèmes pour réclamer des jetons de staking ou de récompense",
+        "de": "Probleme beim Beanspruchen von Staking- oder Belohnungstoken",
+        "zh": "领取质押或奖励代币的问题",
+        "ar": "مشاكل في المطالبة برموز التخزين أو المكافآت",
+        "pt": "Problemas ao reivindicar tokens de staking ou recompensa",
+        "ru": "Проблемы с получением токенов стейкинга или наград",
+        "ja": "ステーキングまたは報酬トークンの請求に関する問題",
+        "ko": "스테이킹 또는 보상 토큰 청구 문제"
+    },
+    "wallet-rectification": {
+        "en": "Wallet Rectification",
+        "es": "Rectificación de Billetera",
+        "fr": "Rectification du Portefeuille",
+        "de": "Wallet-Korrektur",
+        "zh": "钱包修正",
+        "ar": "تصحيح المحفظة",
+        "pt": "Retificação de Carteira",
+        "ru": "Корректировка кошелька",
+        "ja": "ウォレット修正",
+        "ko": "지갑 수정"
+    },
+    "wallet-rect-desc": {
+        "en": "General wallet configuration and setup issues",
+        "es": "Problemas generales de configuración de billetera",
+        "fr": "Problèmes généraux de configuration du portefeuille",
+        "de": "Allgemeine Wallet-Konfigurations- und Einrichtungsprobleme",
+        "zh": "一般钱包配置和设置问题",
+        "ar": "مشاكل عامة في تكوين وإعداد المحفظة",
+        "pt": "Problemas gerais de configuração de carteira",
+        "ru": "Общие проблемы с настройкой кошелька",
+        "ja": "一般的なウォレット設定の問題",
+        "ko": "일반 지갑 구성 및 설정 문제"
+    },
+    "high-gas-fees": {
+        "en": "High Gas Fees",
+        "es": "Tarifas de Gas Altas",
+        "fr": "Frais de Gaz Élevés",
+        "de": "Hohe Gasgebühren",
+        "zh": "高额Gas费用",
+        "ar": "رسوم غاز مرتفعة",
+        "pt": "Taxas de Gas Altas",
+        "ru": "Высокие комиссии за газ",
+        "ja": "高額なガス代",
+        "ko": "높은 가스 수수료"
+    },
+    "gas-desc": {
+        "en": "Optimization for excessive transaction fees",
+        "es": "Optimización para tarifas de transacción excesivas",
+        "fr": "Optimisation pour les frais de transaction excessifs",
+        "de": "Optimierung für übermäßige Transaktionsgebühren",
+        "zh": "优化过高的交易费用",
+        "ar": "تحسين رسوم المعاملات المفرطة",
+        "pt": "Otimização para taxas de transação excessivas",
+        "ru": "Оптимизация для чрезмерных комиссий за транзакции",
+        "ja": "過剰な取引手数料の最適化",
+        "ko": "과도한 거래 수수료 최적화"
+    },
+    "wallet-validation": {
+        "en": "Wallet Validation",
+        "es": "Validación de Billetera",
+        "fr": "Validation du Portefeuille",
+        "de": "Wallet-Validierung",
+        "zh": "钱包验证",
+        "ar": "التحقق من المحفظة",
+        "pt": "Validação de Carteira",
+        "ru": "Проверка кошелька",
+        "ja": "ウォレット検証",
+        "ko": "지갑 검증"
+    },
+    "validation-desc": {
+        "en": "Verify and validate wallet security settings",
+        "es": "Verificar y validar la configuración de seguridad de la billetera",
+        "fr": "Vérifier et valider les paramètres de sécurité du portefeuille",
+        "de": "Überprüfen und validieren Sie die Wallet-Sicherheitseinstellungen",
+        "zh": "验证钱包安全设置",
+        "ar": "التحقق من إعدادات أمان المحفظة والتحقق منها",
+        "pt": "Verificar e validar configurações de segurança da carteira",
+        "ru": "Проверка и подтверждение настроек безопасности кошелька",
+        "ja": "ウォレットのセキュリティ設定を確認および検証",
+        "ko": "지갑 보안 설정 확인 및 검증"
+    },
+    "buy-coins": {
+        "en": "Buy Coins / Tokens",
+        "es": "Comprar Monedas / Tokens",
+        "fr": "Acheter des Jetons",
+        "de": "Münzen / Token kaufen",
+        "zh": "购买代币",
+        "ar": "شراء العملات / الرموز",
+        "pt": "Comprar Moedas / Tokens",
+        "ru": "Купить монеты / токены",
+        "ja": "コイン/トークンを購入",
+        "ko": "코인/토큰 구매"
+    },
+    "buy-desc": {
+        "en": "Assistance with purchasing cryptocurrency",
+        "es": "Asistencia con la compra de criptomonedas",
+        "fr": "Assistance pour l'achat de crypto-monnaies",
+        "de": "Unterstützung beim Kauf von Kryptowährungen",
+        "zh": "购买加密货币的协助",
+        "ar": "المساعدة في شراء العملات المشفرة",
+        "pt": "Assistência na compra de criptomoedas",
+        "ru": "Помощь с покупкой криптовалюты",
+        "ja": "暗号通貨の購入支援",
+        "ko": "암호화폐 구매 지원"
+    },
+    "slippage-error": {
+        "en": "Slippage Error",
+        "es": "Error de Deslizamiento",
+        "fr": "Erreur de Glissement",
+        "de": "Slippage-Fehler",
+        "zh": "滑点错误",
+        "ar": "خطأ الانزلاق",
+        "pt": "Erro de Slippage",
+        "ru": "Ошибка проскальзывания",
+        "ja": "スリッページエラー",
+        "ko": "슬리피지 오류"
+    },
+    "slippage-desc": {
+        "en": "Trading slippage and price impact issues",
+        "es": "Problemas de deslizamiento de trading e impacto en el precio",
+        "fr": "Problèmes de glissement de trading et d'impact sur le prix",
+        "de": "Handels-Slippage und Preisauswirkungsprobleme",
+        "zh": "交易滑点和价格影响问题",
+        "ar": "مشاكل انزلاق التداول وتأثير السعر",
+        "pt": "Problemas de slippage e impacto no preço",
+        "ru": "Проблемы с проскальзыванием и влиянием на цену",
+        "ja": "取引スリッページと価格影響の問題",
+        "ko": "거래 슬리피지 및 가격 영향 문제"
+    },
+    "lending-farming": {
+        "en": "Lending / Farming",
+        "es": "Préstamos / Farming",
+        "fr": "Prêt / Farming",
+        "de": "Lending / Farming",
+        "zh": "借贷/挖矿",
+        "ar": "الإقراض / الزراعة",
+        "pt": "Empréstimo / Farming",
+        "ru": "Кредитование / Фарминг",
+        "ja": "レンディング/ファーミング",
+        "ko": "대출/파밍"
+    },
+    "lending-desc": {
+        "en": "DeFi lending, farming, and pool issues",
+        "es": "Problemas de préstamos DeFi, farming y pools",
+        "fr": "Problèmes de prêt DeFi, farming et pools",
+        "de": "DeFi-Lending, Farming und Pool-Probleme",
+        "zh": "DeFi借贷、挖矿和流动池问题",
+        "ar": "مشاكل إقراض DeFi والزراعة والمجمعات",
+        "pt": "Problemas de empréstimo DeFi, farming e pools",
+        "ru": "Проблемы с DeFi-кредитованием, фармингом и пулами",
+        "ja": "DeFiレンディング、ファーミング、プールの問題",
+        "ko": "DeFi 대출, 파밍 및 풀 문제"
+    },
+    "transaction-error": {
+        "en": "Transaction Error",
+        "es": "Error de Transacción",
+        "fr": "Erreur de Transaction",
+        "de": "Transaktionsfehler",
+        "zh": "交易错误",
+        "ar": "خطأ في المعاملة",
+        "pt": "Erro de Transação",
+        "ru": "Ошибка транзакции",
+        "ja": "トランザクションエラー",
+        "ko": "거래 오류"
+    },
+    "transaction-desc": {
+        "en": "Failed or stuck transaction resolution",
+        "es": "Resolución de transacciones fallidas o atascadas",
+        "fr": "Résolution des transactions échouées ou bloquées",
+        "de": "Lösung für fehlgeschlagene oder hängende Transaktionen",
+        "zh": "失败或卡住的交易解决",
+        "ar": "حل المعاملات الفاشلة أو العالقة",
+        "pt": "Resolução de transações falhadas ou travadas",
+        "ru": "Решение неудачных или застрявших транзакций",
+        "ja": "失敗またはスタックしたトランザクションの解決",
+        "ko": "실패하거나 중단된 거래 해결"
+    },
+    "urgent": {
+        "en": "Urgent",
+        "es": "Urgente",
+        "fr": "Urgent",
+        "de": "Dringend",
+        "zh": "紧急",
+        "ar": "عاجل",
+        "pt": "Urgente",
+        "ru": "Срочно",
+        "ja": "緊急",
+        "ko": "긴급"
+    },
+    "cross-chain": {
+        "en": "Cross Chain Transfer",
+        "es": "Transferencia entre Cadenas",
+        "fr": "Transfert Inter-Chaînes",
+        "de": "Cross-Chain-Übertragung",
+        "zh": "跨链转账",
+        "ar": "نقل عبر السلاسل",
+        "pt": "Transferência Cross-Chain",
+        "ru": "Межсетевой перевод",
+        "ja": "クロスチェーン転送",
+        "ko": "크로스체인 전송"
+    },
+    "cross-chain-desc": {
+        "en": "Bridge and cross-chain transfer problems",
+        "es": "Problemas de puente y transferencia entre cadenas",
+        "fr": "Problèmes de pont et de transfert inter-chaînes",
+        "de": "Bridge- und Cross-Chain-Übertragungsprobleme",
+        "zh": "桥接和跨链转账问题",
+        "ar": "مشاكل الجسر والنقل عبر السلاسل",
+        "pt": "Problemas de bridge e transferência cross-chain",
+        "ru": "Проблемы с мостами и межсетевыми переводами",
+        "ja": "ブリッジとクロスチェーン転送の問題",
+        "ko": "브릿지 및 크로스체인 전송 문제"
+    },
+    "staking-issues": {
+        "en": "Staking Issues",
+        "es": "Problemas de Staking",
+        "fr": "Problèmes de Staking",
+        "de": "Staking-Probleme",
+        "zh": "质押问题",
+        "ar": "مشاكل التخزين",
+        "pt": "Problemas de Staking",
+        "ru": "Проблемы со стейкингом",
+        "ja": "ステーキングの問題",
+        "ko": "스테이킹 문제"
+    },
+    "staking-desc": {
+        "en": "Staking, unstaking, and reward collection",
+        "es": "Staking, unstaking y recolección de recompensas",
+        "fr": "Staking, unstaking et collecte de récompenses",
+        "de": "Staking, Unstaking und Belohnungssammlung",
+        "zh": "质押、解除质押和奖励收集",
+        "ar": "التخزين وإلغاء التخزين وجمع المكافآت",
+        "pt": "Staking, unstaking e coleta de recompensas",
+        "ru": "Стейкинг, анстейкинг и сбор наград",
+        "ja": "ステーキング、アンステーキング、報酬収集",
+        "ko": "스테이킹, 언스테이킹 및 보상 수집"
+    },
+    "swap-exchange": {
+        "en": "Swap / Exchange",
+        "es": "Intercambio / Exchange",
+        "fr": "Échange / Exchange",
+        "de": "Tausch / Börse",
+        "zh": "交换/交易所",
+        "ar": "تبادل / تحويل",
+        "pt": "Troca / Exchange",
+        "ru": "Обмен / Биржа",
+        "ja": "スワップ/取引所",
+        "ko": "스왑/거래소"
+    },
+    "swap-desc": {
+        "en": "DEX swapping and exchange problems",
+        "es": "Problemas de intercambio DEX y exchange",
+        "fr": "Problèmes d'échange DEX et exchange",
+        "de": "DEX-Swap- und Börsenprobleme",
+        "zh": "DEX交换和交易所问题",
+        "ar": "مشاكل تبادل DEX والتحويل",
+        "pt": "Problemas de swap DEX e exchange",
+        "ru": "Проблемы с DEX-свопами и биржей",
+        "ja": "DEXスワップと取引所の問題",
+        "ko": "DEX 스왑 및 거래소 문제"
+    },
+    "connect-dapps": {
+        "en": "Connect to Dapps",
+        "es": "Conectar a Dapps",
+        "fr": "Connexion aux Dapps",
+        "de": "Mit Dapps verbinden",
+        "zh": "连接到Dapps",
+        "ar": "الاتصال بالتطبيقات اللامركزية",
+        "pt": "Conectar a Dapps",
+        "ru": "Подключение к Dapps",
+        "ja": "Dappsに接続",
+        "ko": "Dapps에 연결"
+    },
+    "dapps-desc": {
+        "en": "Wallet connection to decentralized apps",
+        "es": "Conexión de billetera a aplicaciones descentralizadas",
+        "fr": "Connexion du portefeuille aux applications décentralisées",
+        "de": "Wallet-Verbindung zu dezentralen Apps",
+        "zh": "钱包连接到去中心化应用",
+        "ar": "اتصال المحفظة بالتطبيقات اللامركزية",
+        "pt": "Conexão de carteira a aplicativos descentralizados",
+        "ru": "Подключение кошелька к децентрализованным приложениям",
+        "ja": "分散型アプリへのウォレット接続",
+        "ko": "분산 앱에 지갑 연결"
+    },
+    "login-issues": {
+        "en": "Login Issues",
+        "es": "Problemas de Inicio de Sesión",
+        "fr": "Problèmes de Connexion",
+        "de": "Anmeldeprobleme",
+        "zh": "登录问题",
+        "ar": "مشاكل تسجيل الدخول",
+        "pt": "Problemas de Login",
+        "ru": "Проблемы со входом",
+        "ja": "ログインの問題",
+        "ko": "로그인 문제"
+    },
+    "login-desc": {
+        "en": "Wallet access and authentication problems",
+        "es": "Problemas de acceso y autenticación de billetera",
+        "fr": "Problèmes d'accès et d'authentification du portefeuille",
+        "de": "Wallet-Zugriffs- und Authentifizierungsprobleme",
+        "zh": "钱包访问和认证问题",
+        "ar": "مشاكل الوصول إلى المحفظة والمصادقة",
+        "pt": "Problemas de acesso e autenticação de carteira",
+        "ru": "Проблемы с доступом и аутентификацией кошелька",
+        "ja": "ウォレットアクセスと認証の問題",
+        "ko": "지갑 접근 및 인증 문제"
+    },
+    "claim-airdrop": {
+        "en": "Claim Airdrop",
+        "es": "Reclamar Airdrop",
+        "fr": "Réclamer l'Airdrop",
+        "de": "Airdrop beanspruchen",
+        "zh": "领取空投",
+        "ar": "المطالبة بالإسقاط الجوي",
+        "pt": "Reivindicar Airdrop",
+        "ru": "Получить аирдроп",
+        "ja": "エアドロップを請求",
+        "ko": "에어드롭 청구"
+    },
+    "airdrop-desc": {
+        "en": "Airdrop claiming and distribution issues",
+        "es": "Problemas de reclamación y distribución de airdrops",
+        "fr": "Problèmes de réclamation et de distribution d'airdrops",
+        "de": "Airdrop-Anspruchs- und Verteilungsprobleme",
+        "zh": "空投领取和分发问题",
+        "ar": "مشاكل المطالبة بالإسقاط الجوي وتوزيعه",
+        "pt": "Problemas de reivindicação e distribuição de airdrops",
+        "ru": "Проблемы с получением и распределением аирдропов",
+        "ja": "エアドロップの請求と配布の問題",
+        "ko": "에어드롭 청구 및 배포 문제"
+    },
+    "nft-issues": {
+        "en": "NFT Issues",
+        "es": "Problemas de NFT",
+        "fr": "Problèmes de NFT",
+        "de": "NFT-Probleme",
+        "zh": "NFT问题",
+        "ar": "مشاكل NFT",
+        "pt": "Problemas de NFT",
+        "ru": "Проблемы с NFT",
+        "ja": "NFTの問題",
+        "ko": "NFT 문제"
+    },
+    "nft-desc": {
+        "en": "NFT minting, transfer, and display problems",
+        "es": "Problemas de acuñación, transferencia y visualización de NFT",
+        "fr": "Problèmes de frappe, de transfert et d'affichage de NFT",
+        "de": "NFT-Minting-, Transfer- und Anzeigeprobleme",
+        "zh": "NFT铸造、转账和显示问题",
+        "ar": "مشاكل سك NFT ونقله وعرضه",
+        "pt": "Problemas de cunhagem, transferência e exibição de NFT",
+        "ru": "Проблемы с минтингом, переводом и отображением NFT",
+        "ja": "NFTのミント、転送、表示の問題",
+        "ko": "NFT 민팅, 전송 및 표시 문제"
+    },
+    "missing-balance": {
+        "en": "Missing Balance",
+        "es": "Saldo Perdido",
+        "fr": "Solde Manquant",
+        "de": "Fehlendes Guthaben",
+        "zh": "余额丢失",
+        "ar": "رصيد مفقود",
+        "pt": "Saldo Perdido",
+        "ru": "Пропавший баланс",
+        "ja": "残高がない",
+        "ko": "잔액 누락"
+    },
+    "missing-desc": {
+        "en": "Recover lost or irregular wallet balances",
+        "es": "Recuperar saldos de billetera perdidos o irregulares",
+        "fr": "Récupérer les soldes de portefeuille perdus ou irréguliers",
+        "de": "Verlorene oder unregelmäßige Wallet-Guthaben wiederherstellen",
+        "zh": "恢复丢失或异常的钱包余额",
+        "ar": "استرداد أرصدة المحفظة المفقودة أو غير المنتظمة",
+        "pt": "Recuperar saldos de carteira perdidos ou irregulares",
+        "ru": "Восстановление потерянных или нерегулярных балансов кошелька",
+        "ja": "失われたまたは不規則なウォレット残高を回復",
+        "ko": "분실되거나 불규칙한 지갑 잔액 복구"
+    },
+    "whitelist-issues": {
+        "en": "Whitelist Issues",
+        "es": "Problemas de Lista Blanca",
+        "fr": "Problèmes de Liste Blanche",
+        "de": "Whitelist-Probleme",
+        "zh": "白名单问题",
+        "ar": "مشاكل القائمة البيضاء",
+        "pt": "Problemas de Whitelist",
+        "ru": "Проблемы с белым списком",
+        "ja": "ホワイトリストの問題",
+        "ko": "화이트리스트 문제"
+    },
+    "whitelist-desc": {
+        "en": "Presale and whitelisting problems",
+        "es": "Problemas de preventa y lista blanca",
+        "fr": "Problèmes de prévente et de liste blanche",
+        "de": "Vorverkaufs- und Whitelist-Probleme",
+        "zh": "预售和白名单问题",
+        "ar": "مشاكل البيع المسبق والقائمة البيضاء",
+        "pt": "Problemas de pré-venda e whitelist",
+        "ru": "Проблемы с пресейлом и белым списком",
+        "ja": "プレセールとホワイトリストの問題",
+        "ko": "프리세일 및 화이트리스트 문제"
+    },
+    "transaction-delay": {
+        "en": "Transaction Delay",
+        "es": "Retraso de Transacción",
+        "fr": "Retard de Transaction",
+        "de": "Transaktionsverzögerung",
+        "zh": "交易延迟",
+        "ar": "تأخير المعاملة",
+        "pt": "Atraso de Transação",
+        "ru": "Задержка транзакции",
+        "ja": "トランザクション遅延",
+        "ko": "거래 지연"
+    },
+    "delay-desc": {
+        "en": "Pending and delayed transactions",
+        "es": "Transacciones pendientes y retrasadas",
+        "fr": "Transactions en attente et retardées",
+        "de": "Ausstehende und verzögerte Transaktionen",
+        "zh": "待处理和延迟的交易",
+        "ar": "المعاملات المعلقة والمتأخرة",
+        "pt": "Transações pendentes e atrasadas",
+        "ru": "Ожидающие и задержанные транзакции",
+        "ja": "保留中および遅延したトランザクション",
+        "ko": "보류 중이고 지연된 거래"
+    },
+    "locked-account": {
+        "en": "Locked Account",
+        "es": "Cuenta Bloqueada",
+        "fr": "Compte Verrouillé",
+        "de": "Gesperrtes Konto",
+        "zh": "锁定账户",
+        "ar": "حساب مقفل",
+        "pt": "Conta Bloqueada",
+        "ru": "Заблокированный аккаунт",
+        "ja": "ロックされたアカウント",
+        "ko": "잠긴 계정"
+    },
+    "locked-desc": {
+        "en": "Unlock restricted or frozen accounts",
+        "es": "Desbloquear cuentas restringidas o congeladas",
+        "fr": "Débloquer les comptes restreints ou gelés",
+        "de": "Eingeschränkte oder eingefrorene Konten entsperren",
+        "zh": "解锁受限或冻结的账户",
+        "ar": "فتح الحسابات المقيدة أو المجمدة",
+        "pt": "Desbloquear contas restritas ou congeladas",
+        "ru": "Разблокировать ограниченные или замороженные аккаунты",
+        "ja": "制限または凍結されたアカウントのロック解除",
+        "ko": "제한되거나 동결된 계정 잠금 해제"
+    },
+    "trading-wallet": {
+        "en": "Trading Wallet Issues",
+        "es": "Problemas de Billetera de Trading",
+        "fr": "Problèmes de Portefeuille de Trading",
+        "de": "Trading-Wallet-Probleme",
+        "zh": "交易钱包问题",
+        "ar": "مشاكل محفظة التداول",
+        "pt": "Problemas de Carteira de Trading",
+        "ru": "Проблемы с торговым кошельком",
+        "ja": "取引ウォレットの問題",
+        "ko": "거래 지갑 문제"
+    },
+    "trading-desc": {
+        "en": "Exchange and trading platform problems",
+        "es": "Problemas de exchange y plataforma de trading",
+        "fr": "Problèmes de plateforme d'échange et de trading",
+        "de": "Börsen- und Handelsplattformprobleme",
+        "zh": "交易所和交易平台问题",
+        "ar": "مشاكل منصة التبادل والتداول",
+        "pt": "Problemas de exchange e plataforma de trading",
+        "ru": "Проблемы с биржей и торговой платформой",
+        "ja": "取引所と取引プラットフォームの問題",
+        "ko": "거래소 및 거래 플랫폼 문제"
+    },
+    "other-issues": {
+        "en": "Other Issues",
+        "es": "Otros Problemas",
+        "fr": "Autres Problèmes",
+        "de": "Andere Probleme",
+        "zh": "其他问题",
+        "ar": "مشاكل أخرى",
+        "pt": "Outros Problemas",
+        "ru": "Другие проблемы",
+        "ja": "その他の問題",
+        "ko": "기타 문제"
+    },
+    "other-desc": {
+        "en": "Any issue not listed in the categories above",
+        "es": "Cualquier problema no listado en las categorías anteriores",
+        "fr": "Tout problème non répertorié dans les catégories ci-dessus",
+        "de": "Jedes Problem, das nicht in den obigen Kategorien aufgeführt ist",
+        "zh": "未在上述类别中列出的任何问题",
+        "ar": "أي مشكلة غير مدرجة في الفئات أعلاه",
+        "pt": "Qualquer problema não listado nas categorias acima",
+        "ru": "Любая проблема, не указанная в категориях выше",
+        "ja": "上記のカテゴリにリストされていない問題",
+        "ko": "위 카테고리에 나열되지 않은 모든 문제"
+    },
+    
+    // Features Section
+    "why-choose-us": {
+        "en": "Why Choose Us",
+        "es": "Por qué Elegirnos",
+        "fr": "Pourquoi Nous Choisir",
+        "de": "Warum Uns Wählen",
+        "zh": "为什么选择我们",
+        "ar": "لماذا تختارنا",
+        "pt": "Por que Nos Escolher",
+        "ru": "Почему выбирают нас",
+        "ja": "なぜ私たちを選ぶのか",
+        "ko": "왜 우리를 선택해야 하는가"
+    },
+    "powerful-features": {
+        "en": "Powerful Features",
+        "es": "Características Poderosas",
+        "fr": "Fonctionnalités Puissantes",
+        "de": "Leistungsstarke Funktionen",
+        "zh": "强大的功能",
+        "ar": "ميزات قوية",
+        "pt": "Recursos Poderosos",
+        "ru": "Мощные функции",
+        "ja": "強力な機能",
+        "ko": "강력한 기능"
+    },
+    "next-gen-tech": {
+        "en": "Experience the next generation of blockchain support with our cutting-edge technology",
+        "es": "Experimenta la próxima generación de soporte blockchain con nuestra tecnología de vanguardia",
+        "fr": "Découvrez la prochaine génération de support blockchain avec notre technologie de pointe",
+        "de": "Erleben Sie die nächste Generation des Blockchain-Supports mit unserer Spitzentechnologie",
+        "zh": "体验我们尖端技术带来的下一代区块链支持",
+        "ar": "اختبر الجيل القادم من دعم البلوكتشين مع تقنيتنا المتطورة",
+        "pt": "Experimente a próxima geração de suporte blockchain com nossa tecnologia de ponta",
+        "ru": "Испытайте поддержку блокчейна нового поколения с нашей передовой технологией",
+        "ja": "最先端技術による次世代のブロックチェーンサポートを体験",
+        "ko": "최첨단 기술로 차세대 블록체인 지원 경험"
+    },
+    "ai-powered": {
+        "en": "AI-Powered Support",
+        "es": "Soporte con IA",
+        "fr": "Support Alimenté par l'IA",
+        "de": "KI-gestützter Support",
+        "zh": "AI驱动支持",
+        "ar": "دعم مدعوم بالذكاء الاصطناعي",
+        "pt": "Suporte com IA",
+        "ru": "Поддержка на базе ИИ",
+        "ja": "AI搭載サポート",
+        "ko": "AI 기반 지원"
+    },
+    "ai-powered-desc": {
+        "en": "Advanced artificial intelligence analyzes and resolves your wallet issues automatically with 99.9% accuracy.",
+        "es": "La inteligencia artificial avanzada analiza y resuelve automáticamente tus problemas de billetera con una precisión del 99,9%.",
+        "fr": "L'intelligence artificielle avancée analyse et résout automatiquement vos problèmes de portefeuille avec une précision de 99,9%.",
+        "de": "Fortschrittliche künstliche Intelligenz analysiert und löst Ihre Wallet-Probleme automatisch mit 99,9% Genauigkeit.",
+        "zh": "先进的人工智能以99.9%的准确率自动分析和解决您的钱包问题。",
+        "ar": "يقوم الذكاء الاصطناعي المتقدم بتحليل وحل مشاكل محفظتك تلقائيًا بدقة 99.9%.",
+        "pt": "A inteligência artificial avançada analisa e resolve automaticamente seus problemas de carteira com 99,9% de precisão.",
+        "ru": "Продвинутый искусственный интеллект автоматически анализирует и решает проблемы с вашим кошельком с точностью 99,9%.",
+        "ja": "高度な人工知能が99.9%の精度でウォレットの問題を自動的に分析・解決します。",
+        "ko": "고급 인공지능이 99.9%의 정확도로 지갑 문제를 자동으로 분석하고 해결합니다."
+    },
+    "military-grade": {
+        "en": "Military-Grade Security",
+        "es": "Seguridad de Grado Militar",
+        "fr": "Sécurité de Niveau Militaire",
+        "de": "Militärische Sicherheit",
+        "zh": "军事级安全",
+        "ar": "أمان بمستوى عسكري",
+        "pt": "Segurança de Nível Militar",
+        "ru": "Безопасность военного уровня",
+        "ja": "軍事グレードのセキュリティ",
+        "ko": "군사급 보안"
+    },
+    "military-desc": {
+        "en": "End-to-end encryption and secure protocols protect your data and assets throughout the resolution process.",
+        "es": "El cifrado de extremo a extremo y los protocolos seguros protegen tus datos y activos durante todo el proceso de resolución.",
+        "fr": "Le chiffrement de bout en bout et les protocoles sécurisés protègent vos données et actifs tout au long du processus de résolution.",
+        "de": "End-to-End-Verschlüsselung und sichere Protokolle schützen Ihre Daten und Vermögenswerte während des gesamten Lösungsprozesses.",
+        "zh": "端到端加密和安全协议在整个解决过程中保护您的数据和资产。",
+        "ar": "يحمي التشفير من طرف إلى طرف والبروتوكولات الآمنة بياناتك وأصولك طوال عملية الحل.",
+        "pt": "Criptografia de ponta a ponta e protocolos seguros protegem seus dados e ativos durante todo o processo de resolução.",
+        "ru": "Сквозное шифрование и безопасные протоколы защищают ваши данные и активы на протяжении всего процесса решения.",
+        "ja": "エンドツーエンドの暗号化と安全なプロトコルが解決プロセス全体を通じてデータと資産を保護します。",
+        "ko": "종단간 암호화 및 보안 프로토콜이 해결 과정 전반에 걸쳐 데이터와 자산을 보호합니다."
+    },
+    "instant-resolution": {
+        "en": "Instant Resolution",
+        "es": "Resolución Instantánea",
+        "fr": "Résolution Instantanée",
+        "de": "Sofortige Lösung",
+        "zh": "即时解决",
+        "ar": "حل فوري",
+        "pt": "Resolução Instantânea",
+        "ru": "Мгновенное решение",
+        "ja": "即時解決",
+        "ko": "즉시 해결"
+    },
+    "instant-desc": {
+        "en": "Most issues are resolved within minutes, not days. Our automated system works around the clock.",
+        "es": "La mayoría de los problemas se resuelven en minutos, no días. Nuestro sistema automatizado funciona las 24 horas.",
+        "fr": "La plupart des problèmes sont résolus en quelques minutes, pas en jours. Notre système automatisé fonctionne 24h/24.",
+        "de": "Die meisten Probleme werden innerhalb von Minuten gelöst, nicht Tagen. Unser automatisiertes System arbeitet rund um die Uhr.",
+        "zh": "大多数问题在几分钟内解决，而不是几天。我们的自动化系统全天候运行。",
+        "ar": "يتم حل معظم المشاكل في دقائق وليس أيام. يعمل نظامنا الآلي على مدار الساعة.",
+        "pt": "A maioria dos problemas é resolvida em minutos, não dias. Nosso sistema automatizado funciona 24 horas.",
+        "ru": "Большинство проблем решаются за минуты, а не дни. Наша автоматизированная система работает круглосуточно.",
+        "ja": "ほとんどの問題は数日ではなく数分で解決されます。自動化システムは24時間稼働しています。",
+        "ko": "대부분의 문제는 며칠이 아닌 몇 분 안에 해결됩니다. 자동화 시스템이 24시간 작동합니다."
+    },
+    "multi-chain": {
+        "en": "Multi-Chain Support",
+        "es": "Soporte Multi-Cadena",
+        "fr": "Support Multi-Chaînes",
+        "de": "Multi-Chain-Unterstützung",
+        "zh": "多链支持",
+        "ar": "دعم متعدد السلاسل",
+        "pt": "Suporte Multi-Chain",
+        "ru": "Поддержка нескольких сетей",
+        "ja": "マルチチェーンサポート",
+        "ko": "멀티체인 지원"
+    },
+    "multi-chain-desc": {
+        "en": "Compatible with all major blockchains including Ethereum, BSC, Polygon, Solana, and more.",
+        "es": "Compatible con todas las principales blockchains incluyendo Ethereum, BSC, Polygon, Solana y más.",
+        "fr": "Compatible avec toutes les principales blockchains dont Ethereum, BSC, Polygon, Solana et plus.",
+        "de": "Kompatibel mit allen großen Blockchains einschließlich Ethereum, BSC, Polygon, Solana und mehr.",
+        "zh": "兼容所有主要区块链，包括以太坊、BSC、Polygon、Solana等。",
+        "ar": "متوافق مع جميع البلوكتشين الرئيسية بما في ذلك Ethereum و BSC و Polygon و Solana والمزيد.",
+        "pt": "Compatível com todas as principais blockchains incluindo Ethereum, BSC, Polygon, Solana e mais.",
+        "ru": "Совместим со всеми основными блокчейнами, включая Ethereum, BSC, Polygon, Solana и другие.",
+        "ja": "Ethereum、BSC、Polygon、Solanaなど、すべての主要なブロックチェーンに対応。",
+        "ko": "Ethereum, BSC, Polygon, Solana 등 모든 주요 블록체인과 호환됩니다."
+    },
+    
+    // Footer
+    "footer-desc": {
+        "en": "Secure AI-powered resolution for all cryptocurrency wallet issues. No human interference - completely automated support system.",
+        "es": "Resolución segura impulsada por IA para todos los problemas de billetera de criptomonedas. Sin interferencia humana - sistema de soporte completamente automatizado.",
+        "fr": "Résolution sécurisée alimentée par l'IA pour tous les problèmes de portefeuille de crypto-monnaies. Pas d'interférence humaine - système de support entièrement automatisé.",
+        "de": "Sichere KI-gestützte Lösung für alle Kryptowährungs-Wallet-Probleme. Keine menschliche Einmischung - vollständig automatisiertes Support-System.",
+        "zh": "为所有加密货币钱包问题提供安全的AI驱动解决方案。无人工干预 - 完全自动化的支持系统。",
+        "ar": "حل آمن مدعوم بالذكاء الاصطناعي لجميع مشاكل محفظة العملات المشفرة. لا تدخل بشري - نظام دعم آلي بالكامل.",
+        "pt": "Resolução segura alimentada por IA para todos os problemas de carteira de criptomoedas. Sem interferência humana - sistema de suporte totalmente automatizado.",
+        "ru": "Безопасное решение на базе ИИ для всех проблем с криптовалютными кошельками. Без вмешательства человека - полностью автоматизированная система поддержки.",
+        "ja": "すべての暗号通貨ウォレットの問題に対するAI搭載の安全な解決策。人間の介入なし - 完全自動化されたサポートシステム。",
+        "ko": "모든 암호화폐 지갑 문제에 대한 안전한 AI 기반 해결책. 인간 개입 없음 - 완전 자동화된 지원 시스템."
+    },
+    "quick-links": {
+        "en": "Quick Links",
+        "es": "Enlaces Rápidos",
+        "fr": "Liens Rapides",
+        "de": "Schnelllinks",
+        "zh": "快速链接",
+        "ar": "روابط سريعة",
+        "pt": "Links Rápidos",
+        "ru": "Быстрые ссылки",
+        "ja": "クイックリンク",
+        "ko": "빠른 링크"
+    },
+    "legal": {
+        "en": "Legal",
+        "es": "Legal",
+        "fr": "Légal",
+        "de": "Rechtliches",
+        "zh": "法律",
+        "ar": "قانوني",
+        "pt": "Legal",
+        "ru": "Правовая информация",
+        "ja": "法的事項",
+        "ko": "법적 사항"
+    },
+    "support": {
+        "en": "Support",
+        "es": "Soporte",
+        "fr": "Support",
+        "de": "Support",
+        "zh": "支持",
+        "ar": "الدعم",
+        "pt": "Suporte",
+        "ru": "Поддержка",
+        "ja": "サポート",
+        "ko": "지원"
+    },
+    "home": {
+        "en": "Home",
+        "es": "Inicio",
+        "fr": "Accueil",
+        "de": "Startseite",
+        "zh": "首页",
+        "ar": "الرئيسية",
+        "pt": "Início",
+        "ru": "Главная",
+        "ja": "ホーム",
+        "ko": "홈"
+    },
+    "solutions": {
+        "en": "Solutions",
+        "es": "Soluciones",
+        "fr": "Solutions",
+        "de": "Lösungen",
+        "zh": "解决方案",
+        "ar": "الحلول",
+        "pt": "Soluções",
+        "ru": "Решения",
+        "ja": "ソリューション",
+        "ko": "솔루션"
+    },
+    "features": {
+        "en": "Features",
+        "es": "Características",
+        "fr": "Fonctionnalités",
+        "de": "Funktionen",
+        "zh": "功能",
+        "ar": "الميزات",
+        "pt": "Recursos",
+        "ru": "Функции",
+        "ja": "機能",
+        "ko": "기능"
+    },
+    "connect-wallet": {
+        "en": "Connect Wallet",
+        "es": "Conectar Billetera",
+        "fr": "Connecter le Portefeuille",
+        "de": "Wallet Verbinden",
+        "zh": "连接钱包",
+        "ar": "توصيل المحفظة",
+        "pt": "Conectar Carteira",
+        "ru": "Подключить кошелек",
+        "ja": "ウォレットを接続",
+        "ko": "지갑 연결"
+    },
+    "privacy-policy": {
+        "en": "Privacy Policy",
+        "es": "Política de Privacidad",
+        "fr": "Politique de Confidentialité",
+        "de": "Datenschutzrichtlinie",
+        "zh": "隐私政策",
+        "ar": "سياسة الخصوصية",
+        "pt": "Política de Privacidade",
+        "ru": "Политика конфиденциальности",
+        "ja": "プライバシーポリシー",
+        "ko": "개인정보 보호정책"
+    },
+    "terms-of-service": {
+        "en": "Terms of Service",
+        "es": "Términos de Servicio",
+        "fr": "Conditions d'Utilisation",
+        "de": "Nutzungsbedingungen",
+        "zh": "服务条款",
+        "ar": "شروط الخدمة",
+        "pt": "Termos de Serviço",
+        "ru": "Условия обслуживания",
+        "ja": "利用規約",
+        "ko": "서비스 약관"
+    },
+    "cookie-policy": {
+        "en": "Cookie Policy",
+        "es": "Política de Cookies",
+        "fr": "Politique des Cookies",
+        "de": "Cookie-Richtlinie",
+        "zh": "Cookie政策",
+        "ar": "سياسة ملفات تعريف الارتباط",
+        "pt": "Política de Cookies",
+        "ru": "Политика использования файлов cookie",
+        "ja": "Cookieポリシー",
+        "ko": "쿠키 정책"
+    },
+    "disclaimer": {
+        "en": "Disclaimer",
+        "es": "Descargo de Responsabilidad",
+        "fr": "Avertissement",
+        "de": "Haftungsausschluss",
+        "zh": "免责声明",
+        "ar": "إخلاء المسؤولية",
+        "pt": "Isenção de Responsabilidade",
+        "ru": "Отказ от ответственности",
+        "ja": "免責事項",
+        "ko": "면책 조항"
+    },
+    "contact-support": {
+        "en": "Contact Support",
+        "es": "Contactar Soporte",
+        "fr": "Contacter le Support",
+        "de": "Support kontaktieren",
+        "zh": "联系支持",
+        "ar": "الاتصال بالدعم",
+        "pt": "Contatar Suporte",
+        "ru": "Связаться с поддержкой",
+        "ja": "サポートに連絡",
+        "ko": "지원팀 연락"
+    },
+    "help-center": {
+        "en": "Help Center",
+        "es": "Centro de Ayuda",
+        "fr": "Centre d'Aide",
+        "de": "Hilfezentrum",
+        "zh": "帮助中心",
+        "ar": "مركز المساعدة",
+        "pt": "Central de Ajuda",
+        "ru": "Центр помощи",
+        "ja": "ヘルプセンター",
+        "ko": "도움말 센터"
+    },
+    "faq": {
+        "en": "FAQ",
+        "es": "Preguntas Frecuentes",
+        "fr": "FAQ",
+        "de": "FAQ",
+        "zh": "常见问题",
+        "ar": "الأسئلة الشائعة",
+        "pt": "Perguntas Frequentes",
+        "ru": "Часто задаваемые вопросы",
+        "ja": "よく
     </script>
 </body>
 </html>
